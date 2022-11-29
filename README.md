@@ -1,1 +1,16 @@
 # Protect-SecretsWithCert
+
+## Legal
+You the executor, runner, user accept all liability.
+This code comes with ABSOLUTELY NO WARRANTY.
+This is free and unencumbered software released into the public domain.
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+## About:
+This script is a collection of functions that can be used to obfuscate passwords and secrets using a local certificate and Public/Private key pair.
+
+## Instructions:
+See "Examples" section in Protect-SecretsWithCert.ps1
