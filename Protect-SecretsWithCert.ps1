@@ -47,7 +47,7 @@ function New-SelfSignedSecretsCertificate {
 	}
 	
 	try {
-		New-SelfSignedCertificate -Subject $certName -CertStoreLocation "cert:\LocalMachine\My" -KeyUsage KeyEncipherment,DataEncipherment, KeyAgreement -Type DocumentEncryptionCert
+		New-SelfSignedCertificate -Subject $certName -CertStoreLocation $certStorePath -KeyUsage KeyEncipherment,DataEncipherment, KeyAgreement -Type DocumentEncryptionCert
 	}
 	catch{
 		#Write-Log $ErrorLogFile "ERROR: $($_.Exception.Message)"
@@ -165,7 +165,7 @@ function Protect-SecretWithCert {
 ## Decrypt String with Certificate
 function Unprotect-SecretWithCert {
 	Param(
-		[Parameter(Position=0, Mandatory=$true)]$EncryptedBlock
+		[Parameter(Position=0, Mandatory=$true)][string]$EncryptedBlock
 	)
 	
 	try {
@@ -197,8 +197,9 @@ Edit-CertificatePermissions -Cert $myCert -User "NT AUTHORITY\Authenticated User
 # Encrypt Example
 # Need to get certificate (Cert.Subject) prior to encrypt.
 # Admin privs are not needed to encrypt or decrypt, read permissions to the certificates Private key are needed to decrypt. See above/Edit-CertificatePermissions
-# OutFile used in example. IRL the Encrypted Response may go into a CSV, database, etc
-# If you do intend to store the encrypted response in a single file just use native Protect-CmsMessage. e.g. $PlainTextString | Protect-CmsMessage -To $Cert.Subject 
+# Out-File used in example. IRL the Encrypted Response may go into a CSV, database, etc
+# If you do intend to store the encrypted response in a single file just use native Protect-CmsMessage. 
+#	e.g. $PlainTextString | Protect-CmsMessage -To $Cert.Subject -OutFile .\Example-Encrypted-Response.txt
 $myCert=Get-SelfSignedSecretsCertificate -certStorePath "cert:\LocalMachine\My" -certName "PowerShell Automation"
 $EncryptedResponse = Protect-SecretWithCert -Cert $myCert -PlainTextString "This is my secret message"
 $EncryptedResponse | Out-File .\Example-Encrypted-Response.txt
