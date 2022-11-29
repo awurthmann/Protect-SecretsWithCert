@@ -196,7 +196,7 @@ Edit-CertificatePermissions -Cert $myCert -User "NT AUTHORITY\Authenticated User
 
 # Encrypt Example
 # Need to get certificate (Cert.Subject) prior to encrypt.
-# Admin privs are not needed to encrypt or decrypt, read permissions to the certificates Private key are neede. See above/Edit-CertificatePermissions
+# Admin privs are not needed to encrypt or decrypt, read permissions to the certificates Private key are needed to decrypt. See above/Edit-CertificatePermissions
 # OutFile used in example. IRL the Encrypted Response may go into a CSV, database, etc
 # If you do intend to store the encrypted response in a single file just use native Protect-CmsMessage. e.g. $PlainTextString | Protect-CmsMessage -To $Cert.Subject 
 $myCert=Get-SelfSignedSecretsCertificate -certStorePath "cert:\LocalMachine\My" -certName "PowerShell Automation"
@@ -206,7 +206,7 @@ $EncryptedResponse | Out-File .\Example-Encrypted-Response.txt
 
 # Decrypt Example
 # Do NOT need get the certificate ahead of decrypting 
-# Admin privs are not needed to encrypt or decrypt, read permissions to the certificates Private key are neede. See above/Edit-CertificatePermissions
+# Admin privs are not needed to encrypt or decrypt, read permissions to the certificates Private key are needed to decrypt. See above/Edit-CertificatePermissions
 # Get content from file as a string (it HAS TO BE a string) and print plain text to standard out. IRL you'd likely retrieve the Encrypted Block from a CSV or database
 # If you do intend to read the encrypted response from a single file just use native Unprotect-CmsMessage. e.g. Unprotect-CmsMessage -Path .\Example-Encrypted-Response.txt
 [string]$myEncryptedBlock = Get-Content .\Example-Encrypted-Response.txt
